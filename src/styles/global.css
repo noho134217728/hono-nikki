@@ -18,17 +18,20 @@ body {
 }
 
 body {
-  /* ↓ ...この二行に置き換える */
+  /* 日本語表示が美しいフォントファミリーを指定 */
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   @apply antialiased;
   @apply flex flex-col;
-  @apply bg-neutral-100 dark:bg-gray-100; /* ← ライトモードの背景を白に変更 */
+  /* ↓ ライトモードはオフホワイトに、ダークモードは深いグレーに変更 */
+  @apply bg-neutral-100 dark:bg-neutral-900;
+  /* ↓ ライトモードは黒文字、ダークモードは目に優しいオフホワイトに変更 */
   @apply text-black dark:text-neutral-200; 
 }
 
 header {
   @apply fixed left-0 right-0 top-0 z-50 py-6;
-  @apply bg-sky-200/75 dark:bg-sky-950/75;/* ← ライトモードの背景を水色に変更 */
+  /* ↓ ライトモードは淡い水色に、ダークモードは背景より少し明るいグレーに変更（透明度90%） */
+  @apply bg-sky-200/90 dark:bg-neutral-800/90;
   @apply saturate-100 backdrop-blur-sm;
 }
 
@@ -44,7 +47,8 @@ article {
   @apply prose prose-neutral max-w-full dark:prose-invert prose-img:mx-auto prose-img:my-auto;
   @apply prose-headings:font-semibold;
   @apply prose-headings:text-black prose-headings:dark:text-white;
-  font-feature-settings: "palt"; /* ← この一行を body から article に移動 */
+  font-feature-settings: "palt";
+  @apply prose-p:font-medium;
 }
 
 @layer utilities {
@@ -127,12 +131,8 @@ pre {
   @apply scale-90 transition-transform;
 }
 
-/* --- ここから追加 --- */
-
 /* KaTeXで表示される分数の線を適切なスタイルに修正 */
 .katex .frac-line {
   /* 色は現在の文字色を使い、太さは1px、線種は実線に指定 */
   border-bottom: 1px solid currentColor !important;
 }
-
-/* --- ここまで追加 --- */
