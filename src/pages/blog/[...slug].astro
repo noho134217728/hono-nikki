@@ -51,8 +51,9 @@ const { Content, headings } = await post.render();
     <div class="animate">
       <BackToPrevious href="/blog">Back to blog</BackToPrevious>
     </div>
-    <div class="my-10 space-y-4">
-      <div class="animate flex items-center gap-1.5">
+
+    <section class="animate space-y-4">
+      <div class="flex items-center gap-1.5">
         <div class="font-base text-sm">
           <FormattedDate date={post.data.date} />
         </div>
@@ -61,32 +62,38 @@ const { Content, headings } = await post.render();
           {readingTime(post.body)}
         </div>
       </div>
-      <h1 class="animate text-4xl font-semibold text-black dark:text-white">
+
+      <h1 class="text-4xl font-semibold text-black dark:text-white">
         {post.data.title}
       </h1>
-      <div class="font-base text-sm ">
+
+      <div class="font-base text-sm">
         {post.data.tags && post.data.tags.length > 0 ? (
           post.data.tags.map((tag) => (
-            <div class="inline-block my-1">
+            <span class="inline-block my-1">
               <a
                 href={`/tags/${tag}`}
                 class="mx-1 rounded-full px-2 py-1 bg-orange-300 hover:bg-cyan-200 dark:bg-orange-500 dark:hover:bg-cyan-500 transition-colors duration-300 ease-in-out"
               >
                 #{tag}
               </a>
-            </div>
+            </span>
           ))
         ) : (
           <span>No tags available</span>
         )}
       </div>
-    </div>
+    </section>
+
     {headings.length > 0 && <TableOfContents headings={headings} />}
+
     <article class="animate">
       <Content />
+
       <div class="mt-24">
         <PostNavigation prevPost={prevPost} nextPost={nextPost} />
       </div>
+
       <div class="mt-24">
         <Giscus />
       </div>
