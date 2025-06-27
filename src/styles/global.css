@@ -18,16 +18,18 @@ body {
 }
 
 body {
-  @apply font-sans antialiased;
+  /* ↓ ...この二行に置き換える */
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  @apply antialiased;
   @apply flex flex-col;
-  @apply bg-neutral-300 dark:bg-slate-900;
-  @apply text-black/75 dark:text-white/75;
+  @apply bg-neutral-100 dark:bg-gray-100; /* ← ライトモードの背景を白に変更 */
+  @apply text-black dark:text-neutral-200; 
 }
 
 header {
   @apply fixed left-0 right-0 top-0 z-50 py-6;
-  @apply bg-neutral-100/75 dark:bg-neutral-900/75;
-  @apply saturate-200 backdrop-blur-sm;
+  @apply bg-sky-200/75 dark:bg-sky-950/75;/* ← ライトモードの背景を水色に変更 */
+  @apply saturate-100 backdrop-blur-sm;
 }
 
 main {
@@ -42,6 +44,7 @@ article {
   @apply prose prose-neutral max-w-full dark:prose-invert prose-img:mx-auto prose-img:my-auto;
   @apply prose-headings:font-semibold;
   @apply prose-headings:text-black prose-headings:dark:text-white;
+  font-feature-settings: "palt"; /* ← この一行を body から article に移動 */
 }
 
 @layer utilities {
@@ -123,3 +126,13 @@ pre {
 .copy-code:active {
   @apply scale-90 transition-transform;
 }
+
+/* --- ここから追加 --- */
+
+/* KaTeXで表示される分数の線を適切なスタイルに修正 */
+.katex .frac-line {
+  /* 色は現在の文字色を使い、太さは1px、線種は実線に指定 */
+  border-bottom: 1px solid currentColor !important;
+}
+
+/* --- ここまで追加 --- */
