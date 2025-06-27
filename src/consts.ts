@@ -6,7 +6,7 @@ export const SITE: Site = {
   EMAIL: "noho134217728@gmail.com",
   NUM_POSTS_ON_HOMEPAGE: 2,
   NUM_PUBLICATIONS_ON_HOMEPAGE: 3,
-  SITEURL: 'https://astro-micro-academic.vercel.app' // Update here to link the RSS icon to your website rss
+  SITEURL: 'https://hono-nikki.vercel.app' // ご自身のサイトURLに変更しました
 };
 
 export const HIGHLIGHTAUTHOR = "John B"
@@ -43,4 +43,14 @@ export const ABOUT: Metadata = {
   TITLE: "ABOUT",
   DESCRIPTION:
     "A self-intro",
+};
+
+// --- ↓ ここから下が追加された部分です ↓ ---
+
+export const SOCIALS = {
+  x: "https://x.com/hono_ap_1024",
+  github: "", // ← ここにあなたのGitHubのURLを入力すると、アイコンにリンクが設定されます
+  email: "noho134217728@gmail.com", // SITE.EMAILから設定しました
+  linkedin: "", // ← LinkedInのURL（不要な場合はこのまま）
+  scholar: "", // ← Google ScholarのURL（不要な場合はこのまま）
 };
