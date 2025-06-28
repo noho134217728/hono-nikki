@@ -1,30 +1,48 @@
 ---
 import TableOfContentsHeading from "./TableOfContentsHeading.astro";
 
-// https://kld.dev/building-table-of-contents/
-const { headings } = Astro.props;
-const toc = buildToc(headings);
-
+// 1. 型定義を更新して、これから追加する `subheadings` を含めます
 export interface Heading {
   depth: number;
   slug: string;
   text: string;
+  subheadings: Heading[]; // subheadingsプロパティを追加
 }
 
-function buildToc(headings: Heading[]) {
+// 2. より安全で高機能な buildToc 関数に置き換えます
+//    これで見出しの階層が正しくなくてもエラーになりません。
+function buildToc(headings: Heading[]): Heading[] {
   const toc: Heading[] = [];
-  const parentHeadings = new Map();
+  const parentHeadings = new Map<number, Heading>();
+  
   headings.forEach((h) => {
-    const heading = { ...h, subheadings: [] };
+    // 渡されたhオブジェクトに subheadings プロパティを初期値[]で追加
+    const heading: Heading = { ...h, subheadings: [] };
     parentHeadings.set(heading.depth, heading);
-    if (heading.depth === 2) {
+    
+    // 自分より浅い階層の親を探します
+    let parentDepth = 0;
+    for (const depth of parentHeadings.keys()) {
+      if (depth < heading.depth) {
+        parentDepth = Math.max(parentDepth, depth);
+      }
+    }
+
+    if (parentDepth === 0) {
+      // 親がいない場合（h2など）、トップレベルに追加します
       toc.push(heading);
     } else {
-      parentHeadings.get(heading.depth - 1).subheadings.push(heading);
+      // 親が見つかった場合、その親の subheadings に自分を追加します
+      parentHeadings.get(parentDepth)?.subheadings.push(heading);
     }
   });
   return toc;
 }
+
+const { headings } = Astro.props;
+
+// 3. 【最重要】headings が存在しないページでエラーにならないように保護します
+const toc = headings && headings.length > 0 ? buildToc(headings) : [];
 ---
 
 <details
