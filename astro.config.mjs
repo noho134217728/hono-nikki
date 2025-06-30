@@ -16,11 +16,12 @@ export default defineConfig({
   site: "https://astro-micro-academic.vercel.app",
   integrations: [tailwind(), sitemap(), mdx(), pagefind()],
   markdown: {
+    syntaxHighlight: "shiki", // ✅ これを追加
     shikiConfig: {
       theme: "css-variables",
     },
     rehypePlugins: [rehypeHeadingIds, rehypeAccessibleEmojis, rehypeKatex],
     remarkPlugins: [remarkToc, remarkMath, remarkEmoji],
   },
-  server: { port: 1234, host: true}
+  server: { port: 1234, host: true }
 });

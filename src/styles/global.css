@@ -136,3 +136,18 @@ pre {
   /* 色は現在の文字色を使い、太さは1px、線種は実線に指定 */
   border-bottom: 1px solid currentColor !important;
 }
+
+/* おしゃれな枠 */
+.note-box {
+  border: 2px solid #6cb4e4; /* 枠の色 */
+  background: repeating-linear-gradient(
+    -45deg,
+    #f0f8ff,
+    #f0f8ff 3px,
+    #e9f4ff 3px,
+    #e9f4ff 7px
+  );
+  padding: 1em;
+  border-radius: 8px;
+  margin: 1.5em 0;
+}
