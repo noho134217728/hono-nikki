@@ -288,6 +288,8 @@ plt.close(fig) # メモリを解放
 
 #### 結果
 
+<img src="/animation_time_dependent.gif" alt="GPEパターン形成のΩ依存性" width="500" />
+
 渦格子が生成したり壊れたりを繰り返しています。これに関してもいくつか仮説があり、それを発表しようかなというふうに思います。
 
 * 斥力相互作用により渦格子が壊れやすい
@@ -298,7 +300,12 @@ plt.close(fig) # メモリを解放
 
 超流動体を回すと初めて渦格子が出現するというのが非常に興味深かったです。ある程度の速さで回して初めて格子ができるので、渦格子相転移のような現象が生じているのかなというふうにも感じました。相転移に加え、準安定状態の遷移描像が確立できれば嬉しいなと思いつつ、これからも計算していこうかなというふうに思います。
 
+
 **参考文献**  
+Alexander L. Fetter
+"[Rotating trapped Bose-Einstein condensates](https://journals.aps.org/rmp/abstract/10.1103/RevModPhys.81.647),"  
+*Rev. Mod. Phys*. **81**, 647 (2009).
+
 Gordon Baym,  
 "[Vortex lattices in rapidly rotating Bose-Einstein condensates: Modes and correlation functions](https://journals.aps.org/pra/abstract/10.1103/PhysRevA.69.043618),"  
 *Phys. Rev. A* **69**, 043618 (2004).
