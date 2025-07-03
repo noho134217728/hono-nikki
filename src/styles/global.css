@@ -18,20 +18,15 @@ body {
 }
 
 body {
-  /* 日本語表示が美しいフォントファミリーを指定 */
   font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-  @apply antialiased;
-  @apply flex flex-col;
-  /* ↓ ライトモードはオフホワイトに、ダークモードは深いグレーに変更 */
-  @apply bg-neutral-100 dark:bg-neutral-900;
-  /* ↓ ライトモードは黒文字、ダークモードは目に優しいオフホワイトに変更 */
-  @apply text-black dark:text-neutral-200; 
+  @apply antialiased font-semibold flex flex-col;
+  @apply bg-neutral-50 dark:bg-neutral-800;
+  @apply text-black dark:text-neutral-100;
 }
 
 header {
   @apply fixed left-0 right-0 top-0 z-50 py-6;
-  /* ↓ ライトモードは淡い水色に、ダークモードは背景より少し明るいグレーに変更（透明度90%） */
-  @apply bg-sky-200/90 dark:bg-neutral-800/90;
+  @apply bg-sky-300/90 dark:bg-neutral-700/90; /* より濃い水色、ダーク時は少し明るめに */
   @apply saturate-100 backdrop-blur-sm;
 }
 
