@@ -132,9 +132,9 @@ pre {
   border-bottom: 1px solid currentColor !important;
 }
 
-/* おしゃれな枠 */
+/* おしゃれな枠：ライトモード用 */
 .note-box {
-  border: 2px solid #6cb4e4; /* 枠の色 */
+  border: 2px solid #6cb4e4;
   background: repeating-linear-gradient(
     -45deg,
     #f0f8ff,
@@ -146,6 +146,21 @@ pre {
   border-radius: 8px;
   margin: 1.5em 0;
 }
+
+/* ダークモード用の .note-box 表示 */
+html.dark .note-box {
+  border-color: #3b82f6;
+  background: repeating-linear-gradient(
+    -45deg,
+    #1e293b,
+    #1e293b 3px,
+    #273549 3px,
+    #273549 7px
+  );
+  color: #e5e7eb;
+}
+
+
 
 /* すべてのディスプレイ数式（$$...$$）を中央揃えに */
 .katex-display {
