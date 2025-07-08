@@ -1,0 +1,12 @@
+---
+// props: { pdfPath: string }
+const { pdfPath } = Astro.props;
+---
+
+<div id="pdf-container" style="width: 100%; height: 800px;"></div>
+
+<script type="module">
+  import { renderPDF } from './pdf-renderer.ts';
+
+  renderPDF("pdf-container", "{pdfPath}");
+</script>
