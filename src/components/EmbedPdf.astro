@@ -11,17 +11,17 @@ const {
   height = '700px'
 } = Astro.props;
 ---
+
 <div class="pdf-container">
   <iframe
     src={src}
     style={`width:100%; height:${height}; border:0;`}
     title={title}
-  >
-    <p>
-      お使いのブラウザはPDFの埋め込み表示に対応していません。
-      <a href={src}>こちらからダウンロード</a>してください。
-    </p>
-  </iframe>
+  />
+  <p>
+    お使いのブラウザはPDFの埋め込み表示に対応していません。
+    <a href={src}>こちらからダウンロード</a>してください。
+  </p>
 </div>
 
 <style>
