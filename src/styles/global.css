@@ -168,3 +168,31 @@ html.dark .note-box {
   text-align: center;
   margin: 2rem 0;
 }
+
+/* クイズ形式の <details> タグ装飾 */
+details.quiz-toggle {
+  @apply my-6 p-4 border-l-4 rounded transition-all duration-300 ease-in-out;
+  @apply bg-blue-50 border-blue-400 dark:bg-neutral-700 dark:border-blue-300;
+}
+
+details.quiz-toggle summary {
+  @apply cursor-pointer font-semibold text-blue-700 dark:text-blue-200;
+  @apply select-none;
+}
+
+details.quiz-toggle[open] summary::after {
+  content: "▲";
+  float: right;
+}
+
+details.quiz-toggle summary::after {
+  content: "▼";
+  float: right;
+}
+
+/* クリックトグルスタイル */
+.quiz-toggle {
+  @apply my-6 p-4 border-l-4 rounded;
+  @apply bg-blue-50 border-blue-400 dark:bg-neutral-700 dark:border-blue-300;
+}
+
