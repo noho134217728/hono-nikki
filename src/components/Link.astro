@@ -1,7 +1,11 @@
 ---
 import { cn } from "@lib/utils";
+import type { HTMLAttributes } from 'astro/types'; // この行を追加
 
-type Props = {
+// Propsの型定義を修正
+// HTMLAttributes<'a'> を継承することで、<a>タグが持つ標準的な属性（class, idなど）を
+// 自動的に含めることができます。これにより、class属性も正しく認識されます。
+type Props = HTMLAttributes<'a'> & { // ここを修正
   href: string;
   external?: boolean;
   underline?: boolean;
