@@ -1,4 +1,7 @@
 ---
+// ▼▼▼ この一行を追加 ▼▼▼
+import "katex/dist/katex.min.css";
+
 import Head from "@components/Head.astro";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
@@ -25,7 +28,6 @@ const { title, description } = Astro.props;
   <body class="bg-white text-gray-800 leading-relaxed">
     <Header />
 
-    <!-- <ProgressBar /> -->
     <main class="max-w-4xl mx-auto px-4 py-8">
       <article class="prose dark:prose-invert max-w-full">
         <slot />

@@ -37,6 +37,10 @@ export default defineConfig({
     }),
   ],
   markdown: {
+    // ▼▼▼ この2行を追加 ▼▼▼
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+    // ▲▲▲ ここまで追加 ▲▲▲
     syntaxHighlight: "shiki",
     shikiConfig: {
       theme: "css-variables",
