@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ここでデフォルトのリンク下線を強制的に削除します */
+@layer base {
+  a {
+    text-decoration: none !important; /* !important を追加 */
+  }
+}
+
 html {
   overflow-y: auto;
   color-scheme: light;
@@ -46,6 +53,7 @@ article {
   @apply prose-p:font-medium;
 }
 
+/* article a のスタイルはそのまま維持されます（下線が再適用される） */
 @layer utilities {
   article a {
     @apply font-sans text-current underline underline-offset-[3px];
@@ -59,8 +67,8 @@ article {
 }
 
 .scroll_bar {
-  scrollbar-width: thin; 
-  scrollbar-color:  #1e293b #0f172a ; 
+  scrollbar-width: thin;
+  scrollbar-color:  #1e293b #0f172a ;
 }
 
 .animate {
@@ -160,8 +168,6 @@ html.dark .note-box {
   color: #e5e7eb;
 }
 
-
-
 /* すべてのディスプレイ数式（$$...$$）を中央揃えに */
 .katex-display {
   display: block;
@@ -195,4 +201,3 @@ details.quiz-toggle summary::after {
   @apply my-6 p-4 border-l-4 rounded;
   @apply bg-blue-50 border-blue-400 dark:bg-neutral-700 dark:border-blue-300;
 }
-

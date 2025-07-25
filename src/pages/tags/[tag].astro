@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro'; // @layouts から Layout をインポート
+import Container from '@components/Container.astro'; // @components から Container をインポート
+import ArrowCard from '@components/ArrowCard.astro'; // @components から ArrowCard をインポート
+import { SITE } from '@consts'; // 必要であれば SITE 定数をインポート
+
+// すべてのタグを取得し、それぞれのタグのページを生成します
+export async function getStaticPaths() {
+  const posts = await getCollection('blog'); // 'blog'コレクションから記事を取得
+
+  const allTags = new Set<string>(); // Set<string>で型を明確に
+  posts.forEach(post => {
+    // post.data.tags が配列であることを確認し、存在しない場合はスキップ
+    if (Array.isArray(post.data.tags)) {
+      post.data.tags.forEach(tag => allTags.add(tag));
+    }
+  });
+
+  return Array.from(allTags).map(tag => ({
+    params: { tag: tag },
+    props: { tag: tag },
+  }));
+}
+
+// 現在のページのタグ名を取得
+const { tag } = Astro.props;
+
+// 現在のタグに属する記事をフィルタリングし、日付でソートします
+const allPosts = await getCollection('blog');
+const postsForTag = allPosts
+  .filter(post =>
+    !post.data.draft && // 下書きではない記事のみ
+    Array.isArray(post.data.tags) && // tagsが配列であることを確認
+    post.data.tags.includes(tag) // 現在のタグが含まれているか確認
+  )
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()); // 日付でソート
+
+const pageTitle = `タグ: ${tag} の記事`;
+const pageDescription = `${tag}タグが付いた記事の一覧です。`;
+---
+
+<Layout title={pageTitle} description={pageDescription}>
+  <Container>
+    <main class="space-y-16">
+      <section class="animate">
+        <h1 class="font-semibold text-black dark:text-white">
+          タグ: {tag}
+        </h1>
+        <p class="text-neutral-700 dark:text-neutral-300">
+          「{tag}」タグが付いた記事は以下の通りだよ。
+        </p>
+
+        <ul class="not-prose flex flex-col gap-4 mt-8">
+          {postsForTag.length > 0 ? (
+            postsForTag.map(post => (
+              <li>
+                <ArrowCard entry={post} />
+              </li>
+            ))
+          ) : (
+            <p>このタグの記事はまだないみたい...</p>
+          )}
+        </ul>
+      </section>
+    </main>
+  </Container>
+</Layout>
+
+<style>
+  /* タグページ固有のスタイルがあればここに追加 */
+</style>
