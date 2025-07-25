@@ -4,7 +4,7 @@ import Layout from "@layouts/Layout.astro";
 import Container from "@components/Container.astro";
 import { SITE, HOME } from "@consts";
 import ArrowCard from "@components/ArrowCard.astro";
-import Link from "@components/Link.astro"; // すでにインポートされていますね
+import Link from "@components/Link.astro";
 import { getCollection } from "astro:content";
 
 // 表示するブログ記事のリストを自動で取得しています
@@ -14,23 +14,21 @@ const blog = (await getCollection("blog"))
   .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
 
 // ここからタグ関連のデータを取得するロジックを追加
-const allPosts = await getCollection("blog"); // 全ての投稿を取得（既に `blog` でフィルター済みですが、タグ抽出のためにもう一度取得）
-const allTags = new Set<string>(); // 重複を避けるためにSetを使用
+const allPosts = await getCollection("blog");
+const allTags = new Set<string>();
 
 allPosts.forEach(post => {
-  if (Array.isArray(post.data.tags)) { // `tags` プロパティが存在し、配列であることを確認
+  if (Array.isArray(post.data.tags)) {
     post.data.tags.forEach(tag => allTags.add(tag));
   }
 });
 
-// タグをソート（任意）
-const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', { sensitivity: 'base' })); // 日本語でのソートも考慮
+const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', { sensitivity: 'base' }));
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <aside class="space-y-16" data-pagefind-ignore>
-
       <section class="animate">
         <article class="space-y-4">
           <h1 class="font-semibold text-black dark:text-white">
@@ -72,16 +70,14 @@ const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', {
         </ul>
       </section>
 
-      {/* ここに新しいタグ一覧セクションを追加します */}
+      {/* 記事の分類（タグ）セクション */}
       <section class="animate space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-y-2">
           <h2 class="font-semibold text-black dark:text-white">
             記事の分類（タグ）
           </h2>
-          {/* 必要であれば、すべてのタグ一覧ページへのリンクを追加することも可能 */}
-          {/* <Link href="/tags">すべてのタグを見る</Link> */}
         </div>
-        <div class="not-prose flex flex-wrap gap-2"> {/* Tailwind の flex-wrap と gap でレイアウト */}
+        <div class="not-prose flex flex-wrap gap-2">
           {sortedTags.length > 0 ? (
             sortedTags.map(tag => (
               <Link href={`/tags/${tag}`} class="tag-badge">
@@ -93,44 +89,41 @@ const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', {
           )}
         </div>
       </section>
-
     </aside>
   </Container>
 </Layout>
 
 <style>
-  /* タグの見た目を調整するCSSを追加 */
+  /* styleタグの中身は変更ありません */
   .tag-badge {
     display: inline-block;
-    padding: 0.5rem 1rem; /* p-2 px-4 に相当 */
-    background-color: theme('colors.sky.100'); /* Tailwindのbg-sky-100に相当 */
-    color: theme('colors.sky.800'); /* Tailwindのtext-sky-800に相当 */
-    border-radius: 9999px; /* Tailwindのrounded-fullに相当 */
-    font-size: 0.9rem; /* text-sm に相当 */
-    font-weight: 600; /* font-semibold に相当 */
-    text-decoration: none; /* 下線を削除 */
+    padding: 0.5rem 1rem;
+    background-color: theme('colors.sky.100');
+    color: theme('colors.sky.800');
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-    white-space: nowrap; /* タグが改行されないように */
+    white-space: nowrap;
   }
 
-  /* ダークモード対応 */
   :root.dark .tag-badge {
-    background-color: theme('colors.neutral.700'); /* bg-neutral-700 に相当 */
-    color: theme('colors.neutral.200'); /* text-neutral-200 に相当 */
+    background-color: theme('colors.neutral.700');
+    color: theme('colors.neutral.200');
   }
 
   .tag-badge:hover {
-    background-color: theme('colors.sky.200'); /* hover:bg-sky-200 に相当 */
-    color: theme('colors.sky.900'); /* hover:text-sky-900 に相当 */
-    text-decoration: none; /* ホバー時も下線を削除 */
+    background-color: theme('colors.sky.200');
+    color: theme('colors.sky.900');
+    text-decoration: none;
   }
 
   :root.dark .tag-badge:hover {
-    background-color: theme('colors.neutral.600'); /* hover:bg-neutral-600 に相当 */
-    color: theme('colors.neutral.100'); /* hover:text-neutral-100 に相当 */
+    background-color: theme('colors.neutral.600');
+    color: theme('colors.neutral.100');
   }
 
-  /* Linkコンポーネントが適用される場合、デフォルトの下線を上書き */
   .tag-badge a {
     text-decoration: none !important;
   }
