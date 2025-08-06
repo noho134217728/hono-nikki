@@ -1,0 +1,55 @@
+---
+// src/pages/python/index.astro
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import Link from "@components/Link.astro";
+import { getCollection } from "astro:content";
+
+// 全ブログ記事を取得し、ドラフトを除いて日付降順
+const allPosts = (await getCollection("blog"))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+// Sympy 演習問題：slug が python/sympy/ で始まる記事
+const sympyPosts = allPosts.filter(post =>
+  post.slug.startsWith("python/sympy/")
+);
+
+// その他の Python 記事：タグに Python を含み、sympyPosts に含まれない記事
+const otherPythonPosts = allPosts.filter(post =>
+  post.data.tags?.includes("Python") &&
+  !post.slug.startsWith("python/sympy/")
+);
+---
+
+<Layout title="🐍 Python 記事一覧" description="Python 関連の記事をまとめたページ">
+  <Container>
+    <h1 class="font-bold text-2xl">🐍 Python 記事一覧</h1>
+
+    <!-- Sympy 演習問題セクション -->
+    <section class="mt-8">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-xl">🔢 Sympy 演習問題</h2>
+        <Link href="/python/sympy/">▶ すべて見る</Link>
+      </div>
+      <ul class="not-prose flex flex-col gap-4 mt-4">
+        {sympyPosts.map(post => (
+          <li><ArrowCard entry={post} /></li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- その他の Python 記事セクション -->
+    <section class="mt-12">
+      <div class="flex items-center justify-between">
+        <h2 class="font-semibold text-xl">📝 その他の Python 記事</h2>
+      </div>
+      <ul class="not-prose flex flex-col gap-4 mt-4">
+        {otherPythonPosts.map(post => (
+          <li><ArrowCard entry={post} /></li>
+        ))}
+      </ul>
+    </section>
+  </Container>
+</Layout>

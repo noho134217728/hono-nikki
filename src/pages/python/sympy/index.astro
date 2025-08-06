@@ -1,0 +1,26 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import Link from "@components/Link.astro";
+import { getCollection } from "astro:content";
+
+// 全ブログ記事を取得し sympy 配下の記事だけフィルタ
+const sympyPosts = (await getCollection("blog"))
+  .filter(p => !p.data.draft && p.slug.startsWith("python/sympy/"))
+  .sort((a,b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Layout title="Sympy 演習問題一覧" description="Sympy に特化した演習問題をまとめたページ">
+  <Container>
+    <nav class="mb-6">
+      <Link href="/python/">← Python 記事一覧へ戻る</Link>
+    </nav>
+
+    <h1>🔢 Sympy 演習問題一覧</h1>
+    <ul class="space-y-4">
+      {sympyPosts.map(post => (
+        <li><ArrowCard entry={post} /></li>
+      ))}
+    </ul>
+  </Container>
+</Layout>

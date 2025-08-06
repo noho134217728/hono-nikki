@@ -14,8 +14,13 @@ const allBlogPosts = (await getCollection("blog"))
 // 最新の投稿用に記事をスライス
 const recentPosts = allBlogPosts.slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
 
+// ▼▼▼ 「python」タグを持つ記事だけを抽出 ▼▼▼
+const pythonPosts = allBlogPosts.filter(post =>
+  post.data.tags?.includes("Python")
+);
+
 // ▼▼▼ 「データサイエンスの数学」タグを持つ記事だけを抽出 ▼▼▼
-const mathPosts = allBlogPosts.filter(post => 
+const mathPosts = allBlogPosts.filter(post =>
   post.data.tags?.includes("データサイエンスの数学")
 );
 
@@ -26,12 +31,15 @@ allBlogPosts.forEach(post => {
     post.data.tags.forEach(tag => allTags.add(tag));
   }
 });
-const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', { sensitivity: 'base' }));
+const sortedTags = Array.from(allTags).sort((a, b) =>
+  a.localeCompare(b, 'ja', { sensitivity: 'base' })
+);
 ---
 
 <Layout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
     <aside class="space-y-16" data-pagefind-ignore>
+
       {/* 自己紹介セクション */}
       <section class="animate">
         <article class="space-y-4">
@@ -39,26 +47,42 @@ const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', {
             ほのにっきだよ
           </h1>
           <p>「ほのにっき」にアクセスいただき、ありがとうございます。</p>
-          <p>このサイトでは、日々の研究活動で学んだことなどを載せていく予定だよ。最新の記事は<Link href="/blog">ブログページ</Link>からみてね。</p>
+          <p>
+            このサイトでは、日々の研究活動で学んだことなどを載せていく予定だよ。
+            最新の記事は<Link href="/blog">ブログページ</Link>から見てね。
+          </p>
         </article>
       </section>
 
-      {/* ▼▼▼ データサイエンスの数学セクションを追加 ▼▼▼ */}
+      {/* Python 記事一覧セクション */}
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap items-center justify-between gap-y-2">
+          <h2 class="font-semibold text-black dark:text-white">
+            Python を学ぶ 🐍
+          </h2>
+          <Link href="/python/">Pythonの記事一覧を見る</Link>
+        </div>
+        <ul class="not-prose flex flex-col gap-4">
+          {pythonPosts.map((post) => (
+            <li><ArrowCard entry={post} /></li>
+          ))}
+        </ul>
+      </section>
+
+      {/* データサイエンスの数学セクション */}
       <section class="animate space-y-6">
         <div class="flex flex-wrap items-center justify-between gap-y-2">
           <h2 class="font-semibold text-black dark:text-white">
             データサイエンスの数学を学ぶ 📚
           </h2>
-          <Link href="/tags/データサイエンスの数学">このシリーズのすべての記事を見る</Link>
+          <Link href="/tags/データサイエンスの数学">
+            このシリーズのすべての記事を見る
+          </Link>
         </div>
         <ul class="not-prose flex flex-col gap-4">
-          {
-            mathPosts.map((post) => (
-              <li>
-                <ArrowCard entry={post} />
-              </li>
-            ))
-          }
+          {mathPosts.map((post) => (
+            <li><ArrowCard entry={post} /></li>
+          ))}
         </ul>
       </section>
 
@@ -71,13 +95,9 @@ const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', {
           <Link href="/blog">すべての投稿を見る</Link>
         </div>
         <ul class="not-prose flex flex-col gap-4">
-          {
-            recentPosts.map((post) => (
-              <li>
-                <ArrowCard entry={post} />
-              </li>
-            ))
-          }
+          {recentPosts.map((post) => (
+            <li><ArrowCard entry={post} /></li>
+          ))}
         </ul>
       </section>
 
@@ -100,6 +120,7 @@ const sortedTags = Array.from(allTags).sort((a, b) => a.localeCompare(b, 'ja', {
           )}
         </div>
       </section>
+
     </aside>
   </Container>
 </Layout>
